@@ -1,8 +1,9 @@
 {
   "name": "jiankong-fe",
   "version": "1.0.0",
-  "description": "",
+  "description": "jiankong-fe",
   "main": "index.js",
+  "repository": "https://github.com/Houserqu/jiankong-fe.git",
   "scripts": {
     "dev": "webpack-dev-server --progress --profile --colors --hot --history-api-fallback --host 0.0.0.0 --port 8080",
     "build": "webpack --progress --profile --colors --config  webpack.production.config.js",
@@ -11,6 +12,7 @@
   "author": "houser",
   "license": "ISC",
   "dependencies": {
+    "antd-mobile": "^2.1.0",
     "react": "~15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
@@ -36,6 +38,8 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.9",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
     "webpack": "^3.5.0",
     "webpack-dev-server": "^2.5.0"
   },

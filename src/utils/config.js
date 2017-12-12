@@ -1,1 +1,1 @@
-export const sitename='水墨人生-后台';
+export const sitename='监控系统';

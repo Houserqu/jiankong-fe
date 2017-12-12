@@ -30,12 +30,7 @@ module.exports = {
               plugins:[
 
                 // 配置antd的按需引入
-                // [
-                //   'import',{
-                //     libraryName:'antd',
-                //     style:'css'
-                //   }
-                // ],
+                ['import', { libraryName: 'antd-mobile', style: true }],
 
                 //react热替换
                 ['react-transform', {

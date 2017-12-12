@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
+const theme = require('./package.json').theme;
 
 //定义了一些文件夹的路径
 const ROOT_PATH = path.resolve(__dirname);
@@ -29,12 +30,7 @@ module.exports = {
               plugins:[
 
                 // 配置antd的按需引入
-                // [
-                //   'import',{
-                //     libraryName:'antd',
-                //     style:'css'
-                //   }
-                // ],
+                ['import', { libraryName: 'antd-mobile', style: true }],
 
                 //react热替换
                 ['react-transform', {
@@ -83,7 +79,11 @@ module.exports = {
             }
           }
         ]
-      }
+      },
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', { loader: 'less-loader', options: { modifyVars: theme } }],
+      },
     ]
   },
 
