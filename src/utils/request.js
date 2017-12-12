@@ -54,36 +54,40 @@ export function get(url, params = '') {
  * fetch.post请求封装
  */
 export function post(url, params = '') {
-  let  paramsurl = '';
+  //let  paramsurl = '';
 
   // json 序列化
-  if (params) {
-    const paramsArray = [];
-    // encodeURIComponent
-    Object.keys(params).forEach(key => paramsArray.push(`${key}=${params[key]}`));
+  // if (params) {
+  //   const paramsArray = [];
+  //   // encodeURIComponent
+  //   Object.keys(params).forEach(key => paramsArray.push(`${key}=${params[key]}`));
+  //
+  //   paramsurl += paramsArray.join('&');
+  // }
 
-    paramsurl += paramsArray.join('&');
-  }
+  console.log(JSON.stringify(params));
 
   return new Promise(((resolve, reject) => {
     fetch(url, {
       method: 'post',
-      body: paramsurl,
+      body: JSON.stringify(params),
       mode: 'cors',
-      credentials: 'include',
       headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-      },
+      //   'X-Requested-With': 'XMLHttpRequest',
+        // 'Accept': 'application/json, text/plain, */*',
+         'Content-Type': 'application/json;charset=utf-8'
+       },
     }).then((response) => {
       return response.json();
     }).then((responseData) => {
-      const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
-      if (checkCodeResult.code === 200) {
-        resolve(responseData);
-      } else {
-        reject(checkCodeResult.message);
-      }
+      // const checkCodeResult = checkCode(responseData.statusCode, responseData.message);
+      // if (checkCodeResult.code === 200) {
+      //   resolve(responseData);
+      // } else {
+      //   reject(checkCodeResult.message);
+      // }
+      resolve(responseData);
+
     }).catch((err) => {
       reject(err);
     });

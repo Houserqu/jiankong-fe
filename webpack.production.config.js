@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
+const theme = require('./package.json').theme;
 
 //定义了一些文件夹的路径
 const ROOT_PATH = path.resolve(__dirname);
@@ -28,22 +29,8 @@ module.exports = {
             options:{
               presets:['react','es2015','stage-0'],
               plugins:[
-
                 // 配置antd的按需引入
                 ['import', { libraryName: 'antd-mobile', style: true }],
-
-                //react热替换
-                ['react-transform', {
-                  'transforms': [{
-                    'transform': 'react-transform-hmr',
-                    // if you use React Native, pass "react-native" instead:
-                    'imports': ['react'],
-                    // this is important for Webpack HMR:
-                    'locals': ['module']
-                  }]
-                  // note: you can put more transforms into array
-                  // this is just one of them!
-                }]
               ]
             }
           }
@@ -70,6 +57,10 @@ module.exports = {
         use:['style-loader', 'css-loader']
       },
       {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', { loader: 'less-loader', options: { modifyVars: theme } }],
+      },
+      {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
@@ -86,7 +77,7 @@ module.exports = {
   //添加我们的插件 会自动生成一个html文件
   plugins: [
     new HtmlwebpackPlugin({
-      title: '控制台-水墨人生',
+      title: '监控系统',
       template: path.resolve(TEM_PATH),
       filename: 'index.html',
       //chunks这个参数告诉插件要引用entry里面的哪几个入口
