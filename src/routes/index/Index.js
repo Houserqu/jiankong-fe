@@ -24,11 +24,11 @@ const actions = [
         text: '扫码',
         key: 'scan'
     },
-    // {
-    //   icon: <i className="iconfont icon-yonghurenxiang" style={{ fontSize: '25px' }}  />,
-    //   text: '登录',
-    //   key: 'login'
-    // }
+    {
+      icon: <i className="iconfont icon-yonghurenxiang" style={{ fontSize: '25px' }}  />,
+      text: '登录',
+      key: 'login'
+    }
 ]
 
 class Index extends Component {
@@ -44,11 +44,11 @@ class Index extends Component {
 
 
     componentDidMount() {
-        if (!this.checkTime()) {
-            return;
-        }
-        let phone = Cookie.get('phone');
-        //console.log(phone);
+        // if (!this.checkTime()) {
+        //     return;
+        // }
+        let phone = this.props.userInfo.phone;
+        console.log(phone);
         if (phone) {
             this.handleGetMonitors(phone);
         } else {
@@ -77,7 +77,7 @@ class Index extends Component {
         // 获取视频数据
         switch (item.key) {
             case 'refresh' :
-                let phone = Cookie.get('phone');
+                let phone = this.props.userInfo.phone;
                 if (phone) {
                     this.handleGetMonitors(phone);
                 } else {
