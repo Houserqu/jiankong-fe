@@ -5,7 +5,6 @@ import store from './store';
 import Router from './router';
 
 // mock
-import './utils/mock';
 
 ReactDOM.render(
   <Provider store={store}>

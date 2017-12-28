@@ -5,3 +5,10 @@ export function doLogin(phone){
     phone,
   };
 }
+
+export function doGetMonitors(list){
+  return {
+    type:'MONITOR_SET',
+    list,
+  };
+}
