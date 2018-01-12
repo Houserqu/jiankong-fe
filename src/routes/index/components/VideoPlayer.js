@@ -3,7 +3,16 @@ var player;
 
 class VideoPlayer extends Component {
   initVideo = () => {
-    player = new EZUIPlayer(`myPlayer-${this.props.data.id}`);
+    let that = this
+    player = new EZUIPlayer(`myPlayer-${this.props.data.id}`, {
+      autoplay: true
+    });
+
+    console.log(player);
+
+    player.on('play', function(){
+      that.props.videoPlay()
+    });
   }
 
   componentDidUpdate() {
@@ -16,9 +25,6 @@ class VideoPlayer extends Component {
 
   render() {
     const {hlsUrl, rtmpUrl, id} = this.props.data;
-
-    console.log(this.props.data);
-
     const html = `<video id="myPlayer-${id}" poster="" controls playsInline autoPlay style="height: 250px; width: 100%">
       <source src="${rtmpUrl}" type="rtmp/flv" />
       <source src="${hlsUrl}" type="application/x-mpegURL" />
