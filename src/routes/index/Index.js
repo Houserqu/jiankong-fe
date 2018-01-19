@@ -8,6 +8,7 @@ import MonitorsGridItem from './components/MonitorsGridItem';
 import Cookie from 'js-cookie';
 import {API_DOMAIN} from "../../utils/config";
 import { doLogin } from "../../action";
+import {getQueryVariable} from "../../utils/support";
 
 const actions = [
   {
@@ -51,7 +52,14 @@ class Index extends Component {
     // if (!this.checkTime()) {
     //     return;
     // }
-    let phone = Cookie.get('phone');
+
+    // url参数获取phone
+    let phone = getQueryVariable('phone');
+    if(phone[phone.length-1] == '/'){
+      phone = phone.slice(0, -1);
+    }
+
+    //let phone = Cookie.get('phone');
     //let phone = '18678781860';
     console.log(phone);
     if (phone) {
@@ -128,7 +136,11 @@ class Index extends Component {
     if (phone) {
       // 获取视频数据
       loadCouponDataSet({phone}).then(data => {
-        this.setState({videos: data.result.garages});
+        if(data.result.garages.length == 0){
+          Toast.info('没有可观看的摄像头');
+        } else {
+          this.setState({videos: data.result.garages});
+        }
       })
     }
   }
