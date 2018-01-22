@@ -44,7 +44,9 @@ class Index extends Component {
       rtmpUrl: '',
       id: '',
     },
-    isLog: false
+    isLog: false,
+    expireTime: 0,
+    expireTimer: null
   }
 
 
@@ -132,14 +134,41 @@ class Index extends Component {
       ], 'default', null, ['请输入手机号'])
   }
 
+  // 获取监控视频列表
   handleGetMonitors = (phone) => {
     if (phone) {
       // 获取视频数据
       loadCouponDataSet({phone}).then(data => {
+        // 清除计时器
+        // if(this.state.expireTimer){
+        //   window.clearTimeout(this.state.expireTimer);
+        //   console.log('cleared');
+        // }
+
         if(data.result.garages.length == 0){
-          Toast.info('没有可观看的摄像头');
+          Toast.fail('没有可观看的摄像头');
         } else {
-          this.setState({videos: data.result.garages});
+          // 剩余播放时间判断
+          if(data.result.expireTime > 5){
+            this.setState({
+              videos: data.result.garages,
+              expireTime: data.result.expireTime,
+              expireTimer: window.setTimeout(() => {
+                Toast.fail('不在观看时间段', 0);
+                this.setState({
+                  cur_video: {
+                    hlsUrl: '',
+                    rtmpUrl: '',
+                    id: '',
+                  },
+                  expireTime: 0,
+                })
+              }, 10000)
+            });
+          } else {
+            Toast.fail('不在观看时间段', 0)
+          }
+
         }
       })
     }
